@@ -1,0 +1,340 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   DESIGN TOKENS & SYSTEM ARCHITECTURE
+   Colors: --blue #0000FF | --ink #171717 | --paper #F5F1E8 | --white #FFFFFF
+   Grid: 1440px max container, clamp padding, strict spacing scale
+   ========================================================================== */
+
+@theme {
+  --color-blue: #0000FF;
+  --color-ink: #171717;
+  --color-paper: #F5F1E8;
+  --color-white: #FFFFFF;
+  --font-serif: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  /* Core Color Tokens */
+  --blue: #0000FF;
+  --ink: #171717;
+  --paper: #F5F1E8;
+  --white: #FFFFFF;
+
+  /* Typography Scale */
+  --font-serif: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing Scale Tokens */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-128: 128px;
+
+  /* Container & Grid Defaults */
+  --container-max: 1440px;
+  --container-padding: clamp(24px, 5vw, 72px);
+}
+
+/* Base Reset & Geometric Precision */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: var(--ink);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--ink);
+}
+
+/* Selection Highlight */
+::selection {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+/* Standard Layout Container Utility */
+.site-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* 12 / 6 / 4 Column Grid Utility */
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-24);
+}
+
+@media (min-width: 640px) {
+  .site-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-24);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-32);
+  }
+}
+
+/* Section Vertical Padding Rules */
+.section-padding {
+  padding-top: var(--space-64);
+  padding-bottom: var(--space-64);
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: var(--space-80);
+    padding-bottom: var(--space-80);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: var(--space-128);
+    padding-bottom: var(--space-128);
+  }
+}
+
+/* Surface Themes (Strict Surface Alternation) */
+.surface-paper {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+.surface-ink {
+  background-color: var(--ink);
+  color: var(--white);
+}
+
+.surface-white {
+  background-color: var(--white);
+  color: var(--ink);
+}
+
+.surface-blue {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+/* Typography Utility Classes */
+.font-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Editorial Project Tag Hierarchy */
+.tag-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  background-color: rgba(23, 23, 23, 0.8);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tag-editorial:hover {
+  border-color: var(--blue);
+  color: #FFFFFF;
+  background-color: rgba(0, 0, 255, 0.15);
+}
+
+.tag-editorial-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  background-color: #FFFFFF;
+  color: var(--ink);
+  border: 1px solid rgba(23, 23, 23, 0.2);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tag-editorial-light:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+/* Link Underline Hover in Blue */
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: currentColor;
+  text-decoration: none;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--blue);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
+/* Button Component Styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  background-color: var(--blue);
+  color: var(--white);
+  border: 1.5px solid var(--blue);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background-color: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  background-color: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background-color: var(--ink);
+  color: var(--white);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* Form inputs & controls */
+.form-input-editorial {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--ink);
+  background-color: #FAFAF8;
+  border: 1.5px solid rgba(23, 23, 23, 0.25);
+  padding: 14px 16px;
+  min-height: 48px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-input-editorial:focus {
+  outline: none;
+  border-color: var(--blue);
+  background-color: #FFFFFF;
+}
+
+.form-input-editorial::placeholder {
+  color: rgba(23, 23, 23, 0.45);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
